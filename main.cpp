@@ -44,6 +44,8 @@ int size;
 class emulator
 {
 	private:
+	
+		//FONT SET FOR EMULATOR
 		unsigned char font[80] = 
 		{
 			0xF0, 0x90, 0x90, 0x90, 0xF0,		// 0
@@ -103,7 +105,6 @@ class emulator
 		{
 			clearMem();
 			cout << "\n\n\n";
-			std::cout << "LOADED: \n";
 			unsigned short ins;
 			for (int i = 0; i < size*2; i+=2)
 			{
@@ -115,14 +116,7 @@ class emulator
 			}
 			
 		}
-		void printMemory()
-		{
-			std::cout << "MEMORY START\n";
-			for (int i = 0x200; i < 4096; i+=2)
-			{
-				std::cout << std::hex << (int)((char16_t)(memory[i] << 8) | memory[i + 1]) <<"\n";
-			}
-		}
+
 		//KEYBOARD MAPPING
 		void keyPress()
 		{
@@ -167,7 +161,10 @@ class emulator
 		void run()
 		{
 			opcode = (char16_t)(memory[pc] << 8) | memory[pc + 1];
-			cout << std::hex << "ADDRESS: " << (int)pc << " OPCODE: " <<(int)opcode << "\n";
+			
+			//UNCOMMENT TO SEE CURRENT MEMORY ADDRESS AND OPCODE EXECUTED
+			//cout << std::hex << "ADDRESS: " << (int)pc << " OPCODE: " <<(int)opcode << "\n";
+			
 			//DONT FORGET TO BIT SHIFT WHEN USING BITWISE OPERATORS
 			keyPress();
 			switch(opcode & 0xF000)
@@ -637,7 +634,7 @@ class FileRead
 		
 		cout << std::dec;
 		s = s/2;
-		
+		std::cout << "\n\n\n" << s/2 << "\n\n\n";
 		//LOAD INSTRUCTIONS INTO AN ARRAY OF SHORT(UNSIGNED)
 		unsigned short ops[4096];
 		for (int i = 0;  i < s*2; i+=2)
@@ -651,10 +648,10 @@ class FileRead
 		size = s;
 		
 		//SOME REASON THIS IS NEEDED FOR 
-		//POINTER TO BE ACCESSED GLOBALLY???
+		//POINTER TO BE ACCESSED GLOBALLY ON LINUX???
 		for (int i = 0; i < size; i++)
 		{
-			cout<< std::hex << *(op+i) << "\n";
+			//cout<< std::hex << *(op+i) << "\n";
 		}
 	}	
 };
@@ -683,7 +680,6 @@ int main(int argc, char** argv)
 	f.init("roms/" + rm);
 	e.clearMem();
 	e.loadProg();
-	//e.printMemory();
 	
 	
 	//MAIN RUNTIME LOOP
@@ -698,7 +694,6 @@ int main(int argc, char** argv)
         }
 		window.display();
     }
-	/**/
     return 0;
 }
 
