@@ -87,7 +87,7 @@ class emulator
 		//SETS ALL MEMORY CELLS AND REGISTERS TO 0
 		void clearMem()
 		{
-			for (int i = 0; i < sizeof(memory); i++)
+			for (int i = 0; i < 4096; i++)
 			{
 				memory[i]=0;
 				if (i < 16){keys[i] = 0; stack[i] = 0; v[i] = 0;}
@@ -103,6 +103,7 @@ class emulator
 		{
 			clearMem();
 			cout << "\n\n\n";
+			std::cout << "LOADED: \n";
 			unsigned short ins;
 			for (int i = 0; i < size*2; i+=2)
 			{
@@ -114,7 +115,14 @@ class emulator
 			}
 			
 		}
-	
+		void printMemory()
+		{
+			std::cout << "MEMORY START\n";
+			for (int i = 0x200; i < 4096; i+=2)
+			{
+				std::cout << std::hex << (int)((char16_t)(memory[i] << 8) | memory[i + 1]) <<"\n";
+			}
+		}
 		//KEYBOARD MAPPING
 		void keyPress()
 		{
@@ -159,7 +167,7 @@ class emulator
 		void run()
 		{
 			opcode = (char16_t)(memory[pc] << 8) | memory[pc + 1];
-			//cout << std::hex << "ADDRESS: " << (int)pc << " OPCODE: " <<(int)opcode << "\n";
+			cout << std::hex << "ADDRESS: " << (int)pc << " OPCODE: " <<(int)opcode << "\n";
 			//DONT FORGET TO BIT SHIFT WHEN USING BITWISE OPERATORS
 			keyPress();
 			switch(opcode & 0xF000)
@@ -213,14 +221,13 @@ class emulator
 				//SKIPS INSTRUCTION IF VALUES ARE EQUAL
 				case (0x3000):
 				{
+					pc += 2;
 					if (v[((opcode & 0x0F00) >> 8)] == (opcode & 0x00FF))
 					{
 						pc += 2;
 					}
-					pc += 2;
 					break;
-				}
-					
+				}	
 				//SKIPS INSTRUCTION IF VALUES ARE NOT EQUAL
 				case (0x4000):
 				{
@@ -632,7 +639,7 @@ class FileRead
 		s = s/2;
 		
 		//LOAD INSTRUCTIONS INTO AN ARRAY OF SHORT(UNSIGNED)
-		unsigned short ops[s];
+		unsigned short ops[4096];
 		for (int i = 0;  i < s*2; i+=2)
 		{
 			ops[i/2] = buffer[i];
@@ -674,7 +681,10 @@ int main(int argc, char** argv)
 
 	//EMULATOR
 	f.init("roms/" + rm);
+	e.clearMem();
 	e.loadProg();
+	//e.printMemory();
+	
 	
 	//MAIN RUNTIME LOOP
 	while (window.isOpen())
@@ -688,7 +698,7 @@ int main(int argc, char** argv)
         }
 		window.display();
     }
-	
+	/**/
     return 0;
 }
 
