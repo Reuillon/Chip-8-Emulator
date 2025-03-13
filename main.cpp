@@ -677,7 +677,7 @@ int main(int argc, char** argv)
 
 
 	//EMULATOR
-	f.init("roms/" + rm);
+	f.init(rm);
 	e.clearMem();
 	e.loadProg();
 	
