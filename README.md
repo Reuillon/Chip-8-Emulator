@@ -13,4 +13,7 @@ in your terminal enter ./emulator.exe (FOR WINDOWS) or ./emulator.out with the p
 
 e.g. "./emulator.exe roms/BRIX.ch8"
 
+Video demonstration:
+https://www.youtube.com/watch?v=oFBpil8n-cA
+
 Originally written in August 2020
