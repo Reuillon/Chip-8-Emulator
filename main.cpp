@@ -607,8 +607,10 @@ class emulator
 			}
 			if (sound_timer != 0)
 			{
-				cout << '\a';
-				cout << "\n";
+				//THIS PLAYS A BEEP WHEN THE EMULATOR NEEDS TO PRODUCE A SOUND
+				//IT USES THE DEFAULT ALERT SOUND PROVIDED BY THE OPERATING SYSTEM
+				//cout << '\a';
+				//cout << "\n";
 				sound_timer -= 1;
 			}
 			
