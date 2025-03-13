@@ -9,7 +9,7 @@ On Linux:
 g++ main.cpp -o emulator.out -lsfml-graphics -lsfml-window -lsfml-system
 
 to run: 
-in your terminal enter ./emulator.exe (FOR WINDOWS) or ./emulator.out with the rom you are trying to load
+in your terminal enter ./emulator.exe (FOR WINDOWS) or ./emulator.out with the path of the rom you are attempting to load
 
 e.g. "./emulator.exe roms/BRIX.ch8"
 
